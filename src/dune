@@ -1,0 +1,9 @@
+(library
+    (name ppx_logs)
+  (modules ppx_logs)
+  (public_name ppx_logs)
+  (kind ppx_rewriter)
+  (flags (:standard -safe-string))
+  (libraries ppxlib logs)
+  (ppx_runtime_libraries logs)
+  (preprocess (pps ppxlib.metaquot)))

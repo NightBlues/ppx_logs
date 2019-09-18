@@ -1,0 +1,13 @@
+* ppx_logs
+A small ppx that adds source code location to your ~Logs~ calls.
+** Usage
+#+BEGIN_SRC ocaml
+[%logs "const info"]
+#+END_SRC
+Will be transformed into
+#+BEGIN_SRC ocaml
+Logs.msg Logs.Info (fun m -> m "test/example.ml:6 const info")
+#+END_SRC
+For other examples look [[file:test/example.ml]] or [[file:test/test_ppx.ml]]
+** Installation
+opam pin ppx_logs -k git git+https://github.com/nightblues/ppx_logs.git
