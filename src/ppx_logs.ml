@@ -10,13 +10,13 @@ open Parsetree
 let target_expr loc level params =
   let call = Exp.apply ~loc [%expr m] params in
   let level = match level with
-    | Logs.App -> [%expr Logs.App]
-    | Logs.Error -> [%expr Logs.Error]
-    | Logs.Warning -> [%expr Logs.Warning]
-    | Logs.Info -> [%expr Logs.Info]
-    | Logs.Debug -> [%expr Logs.Debug]
+    | Logs.App -> [%expr Logs.app]
+    | Logs.Error -> [%expr Logs.err]
+    | Logs.Warning -> [%expr Logs.warn]
+    | Logs.Info -> [%expr Logs.info]
+    | Logs.Debug -> [%expr Logs.debug]
   in
-  [%expr Logs.msg [%e level] (fun m -> [%e call])]
+  [%expr [%e level] (fun m -> [%e call])]
 
 let wrap_loc loc s =
   let fname, row, _col = Location.(get_pos_info loc.loc_start) in

@@ -2,11 +2,13 @@
 A small ppx that adds source code location to your ~Logs~ calls.
 ** Usage
 #+BEGIN_SRC ocaml
-[%logs "const info"]
+[%logs "const info"];
+[%logs.err "const error #%d" 1]
 #+END_SRC
 Will be transformed into
 #+BEGIN_SRC ocaml
-Logs.msg Logs.Info (fun m -> m "test/example.ml:6 const info")
+Logs.info (fun m -> m "test/example.ml:6 const info");
+Logs.err (fun m -> m "test/example.ml:7 const error #1")
 #+END_SRC
 For other examples look [[file:test/example.ml]] or [[file:test/test_ppx.ml]]
 ** Installation
