@@ -8,15 +8,18 @@ open Parsetree
 
 
 let target_expr loc level params =
-  let call = Exp.apply ~loc [%expr m] params in
+  let mk_ident name =
+    Exp.ident (Location.mkloc (Longident.parse name) loc) in
+  let call = Exp.apply ~loc (mk_ident "m") params in
+  let fun_m = Exp.fun_ Nolabel None (Pat.var @@ Location.mkloc "m" loc) call in
   let level = match level with
-    | Logs.App -> [%expr Logs.app]
-    | Logs.Error -> [%expr Logs.err]
-    | Logs.Warning -> [%expr Logs.warn]
-    | Logs.Info -> [%expr Logs.info]
-    | Logs.Debug -> [%expr Logs.debug]
+    | Logs.App -> mk_ident "Logs.app"
+    | Logs.Error -> mk_ident "Logs.err"
+    | Logs.Warning -> mk_ident "Logs.warn"
+    | Logs.Info -> mk_ident "Logs.info"
+    | Logs.Debug -> mk_ident "Logs.debug"
   in
-  [%expr [%e level] (fun m -> [%e call])]
+  Exp.apply ~loc level [Nolabel, fun_m]
 
 let wrap_loc loc s =
   let fname, row, _col = Location.(get_pos_info loc.loc_start) in
