@@ -15,5 +15,8 @@ let%expect_test "main" =
   [%logs.info "this is info %d" 1];
   [%expect "[INFO]test/test_ppx.ml:15 this is info 1"];
   [%logs.debug "this is debug %d" 1];
-  [%expect "[DEBUG]test/test_ppx.ml:17 this is debug 1"]
+  [%expect "[DEBUG]test/test_ppx.ml:17 this is debug 1"];
+  let m = "Meta" in
+  [%logs.info "meta = %s" m];
+  [%expect "[INFO]test/test_ppx.ml:20 meta = Meta"]
 

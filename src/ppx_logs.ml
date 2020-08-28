@@ -6,12 +6,18 @@ open Ast_helper
 open Asttypes
 open Parsetree
 
+let gensym =
+  let n = ref 999 in
+  fun prefix ->
+    n := !n + 1;
+    Printf.sprintf "%s_%d" prefix !n
 
 let target_expr loc level params =
   let mk_ident name =
     Exp.ident (Location.mkloc (Longident.parse name) loc) in
-  let call = Exp.apply ~loc (mk_ident "m") params in
-  let fun_m = Exp.fun_ Nolabel None (Pat.var @@ Location.mkloc "m" loc) call in
+  let m_name = gensym "m" in
+  let call = Exp.apply ~loc (mk_ident m_name) params in
+  let fun_m = Exp.fun_ Nolabel None (Pat.var @@ Location.mkloc m_name loc) call in
   let level = match level with
     | Logs.App -> mk_ident "Logs.app"
     | Logs.Error -> mk_ident "Logs.err"

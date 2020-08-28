@@ -7,8 +7,8 @@ A small ppx that adds source code location to your ~Logs~ calls.
 #+END_SRC
 Will be transformed into
 #+BEGIN_SRC ocaml
-Logs.info (fun m -> m "test/example.ml:6 const info");
-Logs.err (fun m -> m "test/example.ml:7 const error #1")
+Logs.info (fun m_1000 -> m_1000 "test/example.ml:6 const info");
+Logs.err (fun m_1001 -> m_1001 "test/example.ml:7 const error #%d" 1)
 #+END_SRC
 For other examples look [[file:test/example.ml]] or [[file:test/test_ppx.ml]]
 ** Installation
